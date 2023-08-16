@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popup Chatbot</title>
+  <style>
+    .chat-popup {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 400px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 9999;
+    }
+
+    /* Style for chatbot header */
+    .chat-header {
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      background-color: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .h {
+      color: #007bff;
+    }
+
+    /* Style for close icon */
+    .close-icon {
+      background-image: url(https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-part-2/512/erase_delete_remove_wipe_out-512.png);
+      background-size: 20px;
+      width: 20px;
+      height: 20px;
+      /* padding: 10; */
+      border: none;
+      /* opacity: 3; */
+      cursor: pointer;
+      position: fixed;
+      border-radius: 2px;
+      right: 2%;
+    }
+
+    /* Style for chatbot body */
+    .chat-body {
+      background-image: url(https://cdn.create.vista.com/api/media/small/317972126/stock-video-abstract-loopable-network-background-communication?videoStaticPreview=true&token=);
+      /* background-size: 20px; */
+      color: rgb(250, 250, 250);
+      text-justify: auto;
+      padding: 10px;
+      height: 300px;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin: 20px;
+    }
+
+    .usermessagediv {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      margin-left: 20%;
+    }
+
+    .usermessage {
+      background-color: #097df1;
+      color: #fff;
+      padding: 0.5rem .875rem;
+      border-radius: 20px;
+    }
+
+    .appmessagediv {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      margin-right: 20%;
+    }
+
+    .appmessage {
+      background-color: #e5e5ea;
+      color: #000;
+      padding: 0.5rem .875rem;
+      border-radius: 20px;
+    }
+
+    /* Style for chatbot footer */
+    .chat-footer {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+    }
+
+    /* Style for text area */
+    .message-input {
+      flex: 1;
+      color: rgb(60, 138, 240);
+      padding: 5px;
+      margin: 3;
+      border: 2px solid #ccc;
+      border-radius: 3px;
+    }
+
+    /* Style for send button */
+    .send-button {
+      background-image: url(https://cdn-icons-png.flaticon.com/512/3814/3814305.png);
+      background-size: 20px;
+      width: 20px;
+      height: 20px;
+      padding: 5px 10px;
+      margin-left: 3px;
+      border: none;
+      opacity: 5;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    /* Style for open chat button */
+    .open-button {
+      background-image: url(https://png.pngtree.com/png-vector/20190916/ourmid/pngtree-message-icon-for-your-project-png-image_1731078.jpg);
+      background-size: 70px;
+      width: 70px;
+      height: 70px;
+      padding: 16px 20px;
+      border: none;
+      opacity: .6;
+      position: fixed;
+      bottom: 23px;
+      right: 28px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    /* Style for hover effect */
+    .open-button:hover {
+      opacity: 1.0;
+    }
+  </style>
+</head>
+
+<body>
+  <button id="openChat" class="open-button"></button>
+
+  <div id="chatbotPopup" class="chat-popup">
+    <div class="chat-header">
+      <h3 class="h">Chatbot</h3>
+      <span>
+        <div id="closeChat" class="close-icon" src="" alt=""></div>
+      </span>
+    </div>
+
+    <div class="chat-body">
+      <div id="upperid" class="messages-input"></div>
+    </div>
+
+    <form class="chat-footer" id="userinputform">
+      <textarea id="userinput" class="message-input btn" placeholder="type..."></textarea>
+      <button type="submit" id="sendbtn" class="send-button"></button>
+
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const openChatButton = document.getElementById("openChat");
+      const chatPopup = document.getElementById("chatbotPopup");
+      const closeChatButton = document.getElementById("closeChat");
+      openChatButton.addEventListener("click", () => {
+        chatPopup.style.display = "block";
+      });
+
+      closeChatButton.addEventListener("click", () => {
+        chatPopup.style.display = "none";
+      });
+    });
+
+
+    // for scrolling messages
+    function scrollToBottom() {
+      var div = document.getElementById("upperid");
+      div.scrollTop = div.scrollHeight;
+    }
+    scrollToBottom()
+
+    document.getElementById("userinputform").addEventListener("submit", function (event) {
+      event.preventDefault();
+      formsubmitted();
+    });
+
+    // sending request to python server
+    const formsubmitted = async () => {
+      let userinput = document.getElementById('userinput').value
+      let sendbtn = document.getElementById('sendbtn')
+      let userinputarea = document.getElementById('userinput')
+      let upperdiv = document.getElementById('upperid')
+
+
+      upperdiv.innerHTML = upperdiv.innerHTML + `<div class="message">
+              <div class="usermessagediv">
+                      <div class="usermessage">
+                          ${userinput}
+                      </div>
+              </div>
+          </div>`
+      sendbtn.disabled = true
+      userinputarea.disabled = true
+      scrollToBottom()
+      document.getElementById('userinput').value = ""
+      document.getElementById('userinput').placeholder = "Wait . . ."
+
+      const response = await fetch("http://127.0.0.1:5000/data", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data: userinput })
+
+
+      });
+      let json = await response.json();
+
+      document.getElementById('userinput').placeholder = "Your message..."
+
+
+      if (json.response) {
+        let message = json.message
+        message = message.toString()
+
+        upperdiv.innerHTML = upperdiv.innerHTML + `<div class="message">
+              <div class="appmessagediv">
+                  <div class="appmessage" id="temp">
+                      
+                  </div>
+              </div>
+          </div>`
+        let temp = document.getElementById('temp')
+        let index = 0
+        function displayNextLetter() {
+          scrollToBottom()
+          if (index < message.length) {
+            temp.innerHTML = temp.innerHTML + message[index];
+            index++;
+            setTimeout(displayNextLetter, 30);
+          } else {
+            temp.removeAttribute('id')
+            sendbtn.disabled = false
+            userinputarea.disabled = false
+          }
+        }
+        displayNextLetter()
+        scrollToBottom()
+
+      }
+      else {
+        let message = json.message
+        upperdiv.innerHTML = upperdiv.innerHTML +
+          `<div class="message">
+              <div class="appmessagediv">
+                  <div class="appmessage"  style="border: 1px solid red;">
+                    ${message}
+
+                  </div>
+              </div>
+          </div>`
+        sendbtn.disabled = false
+        userinputarea.disabled = false
+      }
+
+      scrollToBottom()
+
+
+    }
+  </script>
+
+</body>
+
+</html>
