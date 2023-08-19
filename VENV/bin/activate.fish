@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/khan/Desktop/autochat-bot/VENV"
+set -gx VIRTUAL_ENV "/home/khan/Desktop/AI_PoweredPopUpChat-Bot/VENV"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

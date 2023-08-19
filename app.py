@@ -1,4 +1,5 @@
-from flask import Flask, render_template,jsonify,request
+from flask import Flask, render_template, request, jsonify
+import os
 from flask_cors import CORS
 import requests,openai,os
 from dotenv.main import load_dotenv
