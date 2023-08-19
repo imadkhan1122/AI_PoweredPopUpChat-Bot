@@ -1,6 +1,6 @@
-## Chat Bot with OpenAI API and Flask
+## AI Powered PopUp Chat-bot with GPT and Flask
 
-Introducing the Flask Chat Bot powered by the OpenAI API! This innovative chat bot combines the flexibility and ease of use of Flask with the power of the OpenAI API to deliver intelligent and interactive conversations. With natural language processing capabilities, the chat bot can understand user queries and provide relevant responses in real time. Whether it's customer support, information retrieval, or just casual conversation, our chat bot is ready to engage and assist users with its advanced AI capabilities. Get ready for an immersive and dynamic chat experience like never before!
+Flask based pop up Chat Bot powered by the OpenAI API! This innovative chat bot combines the flexibility and ease of use of Flask with the power of the OpenAI API to deliver intelligent and interactive conversations. With natural language processing capabilities, the chat bot can understand user queries and provide relevant responses in real time. Whether it's customer support, information retrieval, or just casual conversation, our chat bot is ready to engage and assist users with its advanced AI capabilities. Get ready for an immersive and dynamic chat experience like never before!
 
 Live : http://paramveersapp.pythonanywhere.com/
 
@@ -18,11 +18,11 @@ Live : http://paramveersapp.pythonanywhere.com/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/paramsgit/autochat-bot
+   git clone https://github.com/imadkhan1122/AI_PoweredPopUpChat-Bot.git
 
 2  Navigate to the project directory:
     
-    cd autochat-bot
+    cd AI_PoweredPopUpChat-Bot
 
 3 Install the required dependencies using pip:
     
