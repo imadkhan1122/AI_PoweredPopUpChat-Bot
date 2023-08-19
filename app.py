@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 load_dotenv()
-API = ''
+API = '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'
 
 @app.route('/')
 def index():
